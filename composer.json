@@ -1,13 +1,13 @@
 {
-    "name": "simplesoftwareio/simple-qrcode",
-    "description": "Simple QrCode is a QR code generator made for Laravel.",
+    "name": "lorysoftwareio/simple-qrcode",
+    "description": "Lory QrCode is a QR code generator made for Laravel.",
     "keywords": ["qrcode", "laravel", "simple", "generator", "wrapper"],
     "homepage": "http://www.simplesoftware.io",
     "license" : "MIT",
     "authors": [
         {
             "name": "Simple Software LLC",
-            "email": "support@simplesoftware.io"
+            "email": "1609405705@qq.com"
         }
     ],
     "require": {
