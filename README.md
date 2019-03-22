@@ -98,7 +98,9 @@ QrCode::errorCorrection('H');
 ```
 下方是 errorCorrection 方法支持的容错级别设置.
 
-加LOGO图(没有圆边)
+#### 加LOGO图(没有圆边)
+
+![avatar](https://raw.githubusercontent.com/SimpleSoftwareIO/simple-qrcode/master/docs/imgs/merged-qrcode.png?raw=true)
 
 merge 方法可以让QrCode为生成结果加上LOGO图片. 下方是常见的为二维码加LOGO图片的使用方式.
 ```
@@ -151,7 +153,9 @@ QrCode::format('png')->size(399)->color(40,40,40)->generate('Make me a QrCode!')
 
 #### 生成圆边图边LOGO二维码
 
+![avatar](https://img2018.cnblogs.com/blog/646346/201903/646346-20190314234503105-395504255.png)
+
 ```
 Qrcode::format('png')->size(100)->cornergenerate('https://www.hao123.com', $cornerimg, $logoimg,public_path("/img/cc.png"));
 ```
-![avatar](https://raw.githubusercontent.com/SimpleSoftwareIO/simple-qrcode/master/docs/imgs/merged-qrcode.png?raw=true)
+
