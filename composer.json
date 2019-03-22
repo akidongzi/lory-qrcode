@@ -2,11 +2,10 @@
     "name": "lorysoftwareio/simple-qrcode",
     "description": "Lory QrCode is a QR code generator made for Laravel.",
     "keywords": ["qrcode", "laravel", "simple", "generator", "wrapper"],
-    "homepage": "http://www.simplesoftware.io",
     "license" : "MIT",
     "authors": [
         {
-            "name": "Simple Software LLC",
+            "name": "Lory Software LLC",
             "email": "1609405705@qq.com"
         }
     ],
@@ -17,8 +16,6 @@
         "illuminate/support": ">=4.2.0"
     },
     "require-dev": {
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "4.7.*"
     },
     "autoload": {
         "psr-0": {
