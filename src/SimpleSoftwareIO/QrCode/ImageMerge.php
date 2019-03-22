@@ -118,6 +118,7 @@ class ImageMerge implements ImageMergeInterface {
         return $this->createImage();
     }
 
+
     /**
      * Creates a PNG Image
      *

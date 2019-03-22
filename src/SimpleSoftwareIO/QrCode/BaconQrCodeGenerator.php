@@ -33,7 +33,7 @@ class BaconQrCodeGenerator implements QrCodeInterface {
      *
      * @var \BaconQrCode\Common\ErrorCorrectionLevel
      */
-    protected $errorCorrection = 0x1;
+    protected $errorCorrection = ErrorCorrectionLevel::L;
 
     /**
      * Holds the Encoder mode to encode a QrCode.
@@ -76,6 +76,7 @@ class BaconQrCodeGenerator implements QrCodeInterface {
     public function generate($text, $filename = null)
     {
         $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection);
+
         if ($this->imageMerge !== null)
         {
             $merger = new ImageMerge(new Image($qrCode), new Image($this->imageMerge));
@@ -91,6 +92,69 @@ class BaconQrCodeGenerator implements QrCodeInterface {
             file_put_contents($filename, $qrCode);
         }
     }
+
+    public function cornergenerate($text, $cornerimg, $logoimg, $filename = null)
+    {
+        $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection);
+
+        $qrCode = $this->cornerimg($qrCode,$cornerimg, $logoimg, $centerbigger=6 );
+        if ($filename === null)
+        {
+            return $qrCode;
+        }
+        else
+        {
+            file_put_contents($filename, $qrCode);
+        }
+    }
+
+    /**
+     * @param $filename   原二维码图片
+     * @param $cornerimg  中心圆角白边图片
+     * @param $logoimg    log图片
+     * @param int $centerbigger   中心图片大小 1、2、3、4、5
+     */
+    function cornerimg($qrcode, $cornerimg, $logoimg, $centerbigger=2){
+        //获取二维码
+        $qrcode = imagecreatefromstring($qrcode);
+        $qrcode_width = imagesx($qrcode);
+        $qrcode_height = imagesy($qrcode);
+
+//圆角图片
+        $corner = file_get_contents($cornerimg);
+        $corner = imagecreatefromstring($corner);
+        $corner_width = imagesx($corner);
+        $corner_height = imagesy($corner);
+
+//计算圆角图片的宽高及相对于二维码的摆放位置,将圆角图片拷贝到二维码中央
+        $corner_qr_height = $corner_qr_width = $qrcode_width/$centerbigger;
+        $from_width = ($qrcode_width-$corner_qr_width)/2;
+        imagecopyresampled($qrcode, $corner, $from_width, $from_width, 0, 0, $corner_qr_width, $corner_qr_height, $corner_width, $corner_height);
+
+
+//logo图片
+        $logo = file_get_contents($logoimg);
+        $logo = imagecreatefromstring($logo);
+        $logo_width = imagesx($logo);
+        $logo_height = imagesy($logo);
+
+
+//计算logo图片的宽高及相对于二维码的摆放位置,将logo拷贝到二维码中央
+        $logo_qr_height = $logo_qr_width = $qrcode_width/$centerbigger - 6;
+        $from_width = ($qrcode_width-$logo_qr_width)/2;
+        imagecopyresampled($qrcode, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
+
+
+        header('Content-type: image/png');
+        ob_start();
+        imagepng($qrcode);
+        return ob_get_clean();
+//        imagedestroy($qrcode);
+//        imagedestroy($corner);
+//        imagedestroy($logo);
+    }
+
+
 
     /**
      * Merges an image with the center of the QrCode
